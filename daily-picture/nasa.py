@@ -3,8 +3,8 @@ import json
 from datetime import datetime
 from cachetools import cached, TTLCache
 
-# Chache will refresh every hour
-cache_TTL = 3600
+# Chache will refresh every 2 hours
+cache_TTL = 7200
 
 # https://apod.nasa.gov/apod/astropix.html
 @cached(cache=TTLCache(maxsize=1, ttl=cache_TTL)) 
