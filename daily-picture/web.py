@@ -36,5 +36,5 @@ def get_bing_image():
     return return_picture(image)
 
 if __name__ == '__main__':
-    # app.run(debug=True)
-    app.run()
+    from waitress import serve
+    serve(app, host="0.0.0.0", port=8080)
