@@ -11,7 +11,7 @@ name: Publish Docker image
 
 on:
   release:
-    types: [published, created]
+    types: [published, created, released]
   # push:
   #   tags:
   #     - "*"
