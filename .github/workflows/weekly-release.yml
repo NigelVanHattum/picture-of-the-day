@@ -1,4 +1,4 @@
-name: Weekly Tuesday Workflow
+name: Weekly Tuesday Release
 
 on:
   schedule:
