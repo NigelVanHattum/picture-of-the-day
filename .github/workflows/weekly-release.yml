@@ -1,0 +1,45 @@
+name: Weekly Tuesday Workflow
+
+on:
+  schedule:
+    - cron: '0 0 * * 2'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set date variable
+        id: date
+        run: echo "::set-output name=date::$(date +'%Y.%m.%d')"
+
+      - name: Determine release tag
+        id: determine_tag
+        run: |
+          DATE="${{ steps.date.outputs.date }}"
+          RELEASE_EXISTS=$(curl -s -o /dev/null -w "%{http_code}" -X GET -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" "https://api.github.com/repos/${{ github.repository }}/releases/tags/${DATE}")
+          if [ $RELEASE_EXISTS -eq 200 ]; then
+            i=1
+            while [ $RELEASE_EXISTS -eq 200 ]; do
+              DATE="${{ steps.date.outputs.date }}.$i"
+              RELEASE_EXISTS=$(curl -s -o /dev/null -w "%{http_code}" -X GET -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" "https://api.github.com/repos/${{ github.repository }}/releases/tags/${DATE}")
+              i=$((i+1))
+            done
+          fi
+          echo "::set-output name=tag::${DATE}"
+
+      - name: Create release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ steps.determine_tag.outputs.tag }}
+          release_name: Release ${{ steps.determine_tag.outputs.tag }}
+          body: |
+            This is an automated release created by GitHub Actions.
+          draft: false
+          prerelease: false
