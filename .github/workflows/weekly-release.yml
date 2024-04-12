@@ -15,7 +15,7 @@ jobs:
 
       - name: Set date variable
         id: date
-        run: echo "::set-output name=date::$(date +'%Y.%m.%d')"
+        run: echo "::set-output name=date::$(date +'%Y%m%d')"
 
       - name: Determine release tag
         id: determine_tag
