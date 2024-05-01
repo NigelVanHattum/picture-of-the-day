@@ -9,17 +9,9 @@
 
 name: Publish Docker image
 
-# on:
-#   release:
-#     types: [published, created, released]
-#   workflow_run:
-#     workflows:
-#       - Release
-#     types:
-#       - completed
-  # push:
-  #   tags:
-  #     - "*"
+on:
+  repository_dispatch:
+    types: [publish_docker_image]
 
 jobs:
   push_to_registry:
