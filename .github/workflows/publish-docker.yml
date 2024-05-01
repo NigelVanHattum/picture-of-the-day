@@ -48,5 +48,7 @@ jobs:
           file: ./Dockerfile
           push: true
           platforms: linux/amd64
-          tags: ${{ steps.meta.outputs.tags }}
+          tags: |
+            nigel95/picture-of-the-day:latest
+            nigel95/picture-of-the-day:${{ github.event.release.tag_name }}
           labels: ${{ steps.meta.outputs.labels }}
