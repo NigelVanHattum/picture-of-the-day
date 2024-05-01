@@ -44,3 +44,11 @@ jobs:
             This is an automated release created by GitHub Actions.
           draft: false
           prerelease: false
+  trigger_release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Release Workflow
+        uses: actions/trigger-workflow@v1
+        with:
+          workflow: "Publish Docker image"
+          input_tag_name: ${{ github.event.release.tag_name }}
