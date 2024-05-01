@@ -49,6 +49,6 @@ jobs:
           push: true
           platforms: linux/amd64
           tags: |
-            nigel95/picture-of-the-day:latest
-            nigel95/picture-of-the-day:${{ github.event.release.tag_name }}
+            latest
+            ${{ github.event.release.tag_name }}
           labels: ${{ steps.meta.outputs.labels }}
